@@ -21,12 +21,23 @@ const pgClient = new Pool({
 
 console.log('trying to create table');
 
-pgClient.on('connect', () => {
-	pgClient
-		.query('CREATE TABLE IF NOT EXISTS values (number INT)')
-		.catch((err) => console.log(err));
-	console.log('Created table');
-});
+// pgClient.on('connect', () => {
+// 	pgClient
+// 		.query('CREATE TABLE IF NOT EXISTS values (number INT)')
+// 		.catch((err) => console.log(err));
+// 	console.log('Created table');
+// });
+
+pgClient
+	.connect()
+	.then(() => {
+		pgClient
+			.query('CREATE TABLE IF NOT EXISTS values (number INT)')
+			.catch((err) => console.log(err));
+	})
+	.catch((err) => {
+		console.log(err);
+	});
 
 console.log('done creating table');
 
